@@ -1,8 +1,55 @@
 <script setup>
 import TheLayout from './components/TheLayout.vue'
 import TheCard from './components/Cards/TheCard.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+//原始資料
+const tickData = ref([
+  {
+    id: 0,
+    tickName: '肥宅心碎賞櫻3日',
+    tickImg:
+      'https://images.unsplash.com/photo-1522383225653-ed111181a951?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1655&q=80',
+    tickArea: '高雄',
+    tickDescript: '賞櫻花最佳去處。肥宅不得不去的超讚景點！',
+    tickCount: 87,
+    tickAmount: 1400,
+    tickStar: 10
+  },
+  {
+    id: 1,
+    tickName: '貓空纜車雙程票',
+    tickImg:
+      'https://images.unsplash.com/photo-1501393152198-34b240415948?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
+    tickArea: '台北',
+    tickDescript: '乘坐以透明強化玻璃為地板的「貓纜之眼」水晶車廂，享受騰雲駕霧遨遊天際之感',
+    tickCount: 99,
+    tickAmount: 240,
+    tickStar: 2
+  },
+  {
+    id: 2,
+    tickName: '台中谷關溫泉會1日',
+    tickImg:
+      'https://images.unsplash.com/photo-1535530992830-e25d07cfa780?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
+    tickArea: '台中',
+    tickDescript:
+      '全館客房均提供谷關無色無味之優質碳酸原湯，並取用八仙山之山冷泉供蒞臨貴賓沐浴及飲水使用。',
+    tickCount: 20,
+    tickAmount: 1765,
+    tickStar: 7
+  }
+])
+
+//傳遞資料用這包
+const tickDataList = computed(() => {
+  return tickData.value
+})
+//取 id 先用 index 代替
+const tickDataLength = computed(() => {
+  return tickData.value.length
+})
 const userData = ref({
+  id: tickDataLength,
   tickName: '', //套票名稱
   tickImg: '', //套票圖片
   tickArea: '', //區域
@@ -12,7 +59,7 @@ const userData = ref({
   tickDescript: '' //套票描述
 })
 const addTicket = () => {
-  console.log(userData.value)
+  tickData.value.push(userData.value)
 }
 </script>
 
@@ -92,7 +139,7 @@ const addTicket = () => {
       </select>
       <p>本次搜尋共 6 筆</p>
     </div>
-    <TheCard></TheCard>
+    <TheCard :tickData="tickDataList"></TheCard>
   </TheLayout>
 </template>
 
