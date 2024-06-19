@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .customMainView {
+    @apply px-15 xl:max-w-customWidth mx-auto my-12 flex justify-around md:px-0;
+  }
+  .customImgView {
+    @apply lg:pl-95 hidden w-5/12 flex-col md:flex;
+  }
+  .customLogoImg {
+    @apply h-[250px] w-[350px];
+  }
+  .customMainImg {
+    @apply h-[235px] w-[350px];
+  }
+  .customFormView {
+    @apply lg:pr-95 flex w-full flex-col gap-4 md:w-5/12;
+  }
+  .customInput {
+    @apply border-primaryColor flex-grow border-b-2 bg-gray-100 p-2 outline-none;
+  }
+  .customLabel {
+    @apply text-primaryColor self-center pr-8 font-bold;
+  }
+  .customLabelText {
+    @apply text-primaryColor pr-8 font-bold;
+  }
+  .customText {
+    @apply border-primaryColor h-24 flex-grow resize-none border-b-2 bg-gray-100 p-2 outline-none;
+  }
+  .formButton {
+    @apply bg-primaryColor ms-auto w-full rounded px-4 py-2 text-white md:w-6/12;
+  }
+}
