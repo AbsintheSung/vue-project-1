@@ -4,12 +4,12 @@ import TheLayout from './components/TheLayout.vue'
 
 <template>
   <TheLayout>
-    <div class="px-15 xl:max-w-customWidth mx-auto my-12 flex justify-around md:px-0">
-      <div class="lg:pl-95 hidden w-5/12 flex-col md:flex">
-        <img class="logoImg ml-auto" src="./assets/images/logo.png" />
-        <img class="mainImg ml-auto" src="./assets/images/main_img.png" />
+    <div class="customMainView">
+      <div class="customImgView">
+        <img class="customLogoImg" src="./assets/images/logo.png" />
+        <img class="customMainImg" src="./assets/images/main_img.png" />
       </div>
-      <form class="lg:pr-95 flex w-full flex-col gap-4 md:w-5/12">
+      <form class="customFormView">
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageName">套票名稱</label>
           <input class="customInput" id="packageName" />
