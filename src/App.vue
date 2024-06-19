@@ -1,5 +1,6 @@
 <script setup>
 import TheLayout from './components/TheLayout.vue'
+import TheCard from './components/Cards/TheCard.vue'
 </script>
 
 <template>
@@ -53,6 +54,9 @@ import TheLayout from './components/TheLayout.vue'
         <button class="formButton">新增套票</button>
       </form>
     </div>
+  </TheLayout>
+  <TheLayout class="primaryBackground">
+    <TheCard></TheCard>
   </TheLayout>
 </template>
 
