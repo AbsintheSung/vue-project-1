@@ -49,7 +49,7 @@
   }
 
   .card {
-    @apply border drop-shadow-xl;
+    @apply flex flex-col border drop-shadow-xl;
   }
   .cardHeader {
     @apply relative mb-[20px];
@@ -67,7 +67,7 @@
     @apply p-[20px];
   }
   .cardFooter {
-    @apply flex items-center justify-between px-[20px];
+    @apply mt-auto flex items-center justify-between p-[20px];
   }
   .cardAmount {
     @apply text-primaryColor font-bold;
