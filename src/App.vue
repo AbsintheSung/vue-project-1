@@ -39,10 +39,17 @@ const tickData = ref([
     tickStar: 7
   }
 ])
+//篩選 原始區域
+const selectData = ref(['全部地區', '高雄', '台北', '台中'])
+const selectValue = ref('全部地區')
 
 //傳遞資料用這包
 const tickDataList = computed(() => {
-  return tickData.value
+  if (selectValue.value === '全部地區') {
+    return tickData.value
+  } else {
+    return tickData.value.filter((dataItem) => dataItem.tickArea === selectValue.value)
+  }
 })
 //取 id 先用 index 代替
 const tickDataLength = computed(() => {
@@ -60,6 +67,9 @@ const userData = ref({
 })
 const addTicket = () => {
   tickData.value.push(userData.value)
+}
+const filterArea = (event) => {
+  selectValue.value = event.target.value
 }
 </script>
 
@@ -131,11 +141,12 @@ const addTicket = () => {
   </TheLayout>
   <TheLayout class="primaryBackground">
     <div class="cardSelectBox">
-      <select class="cardSelect" value="全部地區" selected>
-        <option value="全部地區">全部地區</option>
+      <select @change="filterArea" class="cardSelect" value="全部地區" selected>
+        <option v-for="item in selectData" :key="item" :value="item">{{ item }}</option>
+        <!-- <option value="全部地區">全部地區</option>
         <option value="高雄">高雄</option>
         <option value="台中">台中</option>
-        <option value="台北">台北</option>
+        <option value="台北">台北</option> -->
       </select>
       <p>本次搜尋共 6 筆</p>
     </div>
