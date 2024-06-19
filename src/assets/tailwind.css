@@ -35,6 +35,12 @@
   }
 
   /* 卡片類 */
+  .cardSelectBox {
+    @apply xl:max-w-customWidth mx-auto flex flex-col items-center gap-4 py-[32px] md:flex-row md:gap-24;
+  }
+  .cardSelect {
+    @apply w-[255px] px-[12px] py-[8px];
+  }
   .primaryBackground {
     @apply bg-primaryBackground;
   }

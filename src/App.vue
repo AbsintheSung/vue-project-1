@@ -56,6 +56,15 @@ import TheCard from './components/Cards/TheCard.vue'
     </div>
   </TheLayout>
   <TheLayout class="primaryBackground">
+    <div class="cardSelectBox">
+      <select class="cardSelect" value="全部地區" selected>
+        <option value="全部地區">全部地區</option>
+        <option value="高雄">高雄</option>
+        <option value="台中">台中</option>
+        <option value="台北">台北</option>
+      </select>
+      <p>本次搜尋共 6 筆</p>
+    </div>
     <TheCard></TheCard>
   </TheLayout>
 </template>
