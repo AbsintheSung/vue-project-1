@@ -3,11 +3,10 @@ const props = defineProps({
   tickData: {
     type: Object,
     default: () => {
-      return {}
+      return {};
     }
   }
-})
-console.log(props.tickData)
+});
 </script>
 
 <template>
