@@ -58,6 +58,17 @@ const tickDataList = computed(() => {
     return tickData.value.filter((dataItem) => dataItem.tickArea === selectValue.value);
   }
 });
+//篩選所顯示的資料數
+const tickSelectCount = computed(() => {
+  if (selectValue.value === '全部地區') {
+    return tickData.value.length;
+  } else {
+    const filterLists = tickData.value.filter(
+      (dataItem) => dataItem.tickArea === selectValue.value
+    );
+    return filterLists.length;
+  }
+});
 
 //取 id 先用 index 代替( 初始化的值非響應式，不能用computed，所以改回一般函數 )
 const tickDataLength = () => {
@@ -225,7 +236,7 @@ const filterArea = (event) => {
       <select @change="filterArea" class="cardSelect" value="全部地區" selected>
         <option v-for="item in selectData" :key="item" :value="item">{{ item }}</option>
       </select>
-      <p>本次搜尋共 6 筆</p>
+      <p>本次搜尋共 {{ tickSelectCount }} 筆</p>
     </div>
     <TheCard :tickData="tickDataList"></TheCard>
   </TheLayout>
