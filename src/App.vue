@@ -43,8 +43,11 @@ const tickData = ref([
     tickStar: 7
   }
 ]);
+
 //篩選 原始區域
 const selectData = ref(['全部地區', '高雄', '台北', '台中']);
+
+//篩選 狀態
 const selectValue = ref('全部地區');
 
 //傳遞資料用這包
@@ -55,10 +58,12 @@ const tickDataList = computed(() => {
     return tickData.value.filter((dataItem) => dataItem.tickArea === selectValue.value);
   }
 });
+
 //取 id 先用 index 代替( 初始化的值非響應式，不能用computed，所以改回一般函數 )
 const tickDataLength = () => {
   return tickData.value.length;
 };
+
 //建立初始化資料
 const initialData = {
   tickName: '', //套票名稱
@@ -72,21 +77,6 @@ const initialData = {
 //將資料做響應式關聯
 const userData = ref({ id: tickDataLength(), ...initialData });
 
-const addTicket = async (errorMes, restFn) => {
-  const result = await errorMes();
-  if (result.valid) {
-    tickData.value.push(userData.value);
-    nextTick(() => {
-      restFn(); //重制表單
-      userData.value = { id: tickDataLength(), ...initialData }; //重制響應式資料
-    });
-  } else {
-    console.log(result.errors);
-  }
-};
-const filterArea = (event) => {
-  selectValue.value = event.target.value;
-};
 //配置語言環境
 setLocale('zh_TW');
 
@@ -96,20 +86,39 @@ configure({
   validateOnInput: true //輸入就會驗證，false為離開focus狀態才驗證
 });
 
+//根據每個 Field標籤的 name，給予規則判斷
+const schema = {
+  tickName: 'required', //必填
+  tickImg: 'required|url', //必填 或 要為url網址格式
+  tickArea: 'required', //必填
+  tickAmount: 'required|min_value:0', //必填 或 最小數字為0
+  tickCount: 'required|min_value:0', //必填 或 最小數字為0
+  tickStar: 'required|min_value:1|max_value:10', //必填 或 最小數字為1 最大10
+  tickDescript: 'required|max:100' // 必填 最大數字長度100
+};
+
 //將驗證規則放入defineRule內 ( vee-validate是根據 defineRule內的規則來判斷一開始是沒有規則內容 )
 Object.entries(all).forEach(([name, rule]) => {
   defineRule(name, rule);
 });
 
-//根據每個 Field標籤的 name，給予規則判斷
-const schema = {
-  tickName: 'required', //必填
-  tickImg: 'required|url', //必填 且 要為url網址格式
-  tickArea: 'required', //必填
-  tickAmount: 'required|min_value:0', //必填 且 最小數字為0
-  tickCount: 'required|min_value:0', //必填 且 最小數字為0
-  tickStar: 'required|min_value:1|max_value:10', //必填 且 最小數字為1 最大10
-  tickDescript: 'required|max:100' // 必填 最大數字長度100
+//新增按鈕，第一個參數接受表單回饋資訊(promise物件)，第二個參數接受 重製表單方法
+const addTicket = async (errorMes, restFn) => {
+  const result = await errorMes();
+  //因為套件回傳會有 true 跟 fasle，透過這些判斷即可，目前應不太需要try ..catch方式
+  if (result.valid) {
+    tickData.value.push(userData.value);
+    //使用vue內建 newxtTick 確保 DOM 數據都更新完才去做以下
+    nextTick(() => {
+      restFn(); //重制表單
+      userData.value = { id: tickDataLength(), ...initialData }; //重制響應式資料
+    });
+  }
+};
+
+//篩選修改 篩選狀態
+const filterArea = (event) => {
+  selectValue.value = event.target.value;
 };
 </script>
 
