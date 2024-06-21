@@ -69,8 +69,9 @@ const initialData = {
   tickStar: '', //套票星級
   tickDescript: '' //套票描述
 };
+//將資料做響應式關聯
 const userData = ref({ id: tickDataLength(), ...initialData });
-console.log(userData.value.id);
+
 const addTicket = async (errorMes, restFn) => {
   const result = await errorMes();
   if (result.valid) {
