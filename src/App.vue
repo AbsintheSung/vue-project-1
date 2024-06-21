@@ -166,6 +166,7 @@ const filterArea = (event) => {
           <Field
             class="customInput"
             type="number"
+            min="0"
             id="packageAmount"
             name="tickAmount"
             v-model="userData.tickAmount"
@@ -177,6 +178,7 @@ const filterArea = (event) => {
           <Field
             class="customInput"
             type="number"
+            min="0"
             id="packageTickets"
             name="tickCount"
             v-model="userData.tickCount"
@@ -188,6 +190,8 @@ const filterArea = (event) => {
           <Field
             class="customInput"
             type="number"
+            max="10"
+            min="1"
             id="packageStar"
             name="tickStar"
             v-model="userData.tickStar"
