@@ -82,7 +82,14 @@ setLocale('zh_TW');
 
 //設定 vee-validate 相關配置
 configure({
-  generateMessage: localize({ zh_TW: zhTW }), //localize 將生成的訊息做翻譯
+  generateMessage: (context) => {
+    //移除 錯誤訊息顯示name的
+    const defaultMessage = localize({
+      zh_TW: zhTW
+    })(context);
+    const keyName = context.field;
+    return defaultMessage.replace(`${keyName} `, '');
+  },
   validateOnInput: true //輸入就會驗證，false為離開focus狀態才驗證
 });
 
