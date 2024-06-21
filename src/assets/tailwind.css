@@ -4,10 +4,10 @@
 
 @layer components {
   .customMainView {
-    @apply px-15 xl:max-w-customWidth mx-auto my-12 flex justify-around md:px-0;
+    @apply mx-auto my-12 flex justify-around px-15 md:px-0 xl:max-w-customWidth;
   }
   .customImgView {
-    @apply lg:pl-95 hidden w-5/12 flex-col md:flex;
+    @apply hidden w-5/12 flex-col md:flex lg:pl-95;
   }
   .customLogoImg {
     @apply h-[250px] w-[350px];
@@ -16,27 +16,30 @@
     @apply h-[235px] w-[350px];
   }
   .customFormView {
-    @apply lg:pr-95 flex w-full flex-col gap-4 md:w-5/12;
+    @apply flex w-full flex-col gap-4 md:w-5/12 lg:pr-95;
   }
   .customInput {
-    @apply border-primaryColor flex-grow border-b-2 bg-gray-100 p-2 outline-none;
+    @apply flex-grow border-b-2 border-primaryColor bg-gray-100 p-2 outline-none;
   }
   .customLabel {
-    @apply text-primaryColor self-center pr-8 font-bold;
+    @apply self-center pr-8 font-bold text-primaryColor;
   }
   .customLabelText {
-    @apply text-primaryColor pr-8 font-bold;
+    @apply pr-8 font-bold text-primaryColor;
   }
   .customText {
-    @apply border-primaryColor h-24 flex-grow resize-none border-b-2 bg-gray-100 p-2 outline-none;
+    @apply h-24 flex-grow resize-none border-b-2 border-primaryColor bg-gray-100 p-2 outline-none;
   }
   .formButton {
-    @apply bg-primaryColor ms-auto w-full rounded px-4 py-2 text-white md:w-6/12;
+    @apply ms-auto w-full rounded bg-primaryColor px-4 py-2 text-white md:w-6/12;
+  }
+  .errorMessage {
+    @apply mt-4 w-full pl-[100px] text-red-600;
   }
 
   /* 卡片類 */
   .cardSelectBox {
-    @apply xl:max-w-customWidth mx-auto flex flex-col items-center gap-4 py-[32px] md:flex-row md:gap-24;
+    @apply mx-auto flex flex-col items-center gap-4 py-[32px] md:flex-row md:gap-24 xl:max-w-customWidth;
   }
   .cardSelect {
     @apply w-[255px] px-[12px] py-[8px];
@@ -45,7 +48,7 @@
     @apply bg-primaryBackground;
   }
   .cardsList {
-    @apply px-15 xl:max-w-customWidth mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 md:px-0 lg:grid-cols-3;
+    @apply mx-auto grid grid-cols-1 gap-8 px-15 md:grid-cols-2 md:px-0 lg:grid-cols-3 xl:max-w-customWidth;
   }
 
   .card {
@@ -55,13 +58,13 @@
     @apply relative mb-[20px];
   }
   .cardBadgeTop {
-    @apply bg-secondaryColor absolute left-0 top-[-20px] px-[20px] py-[8px] text-white;
+    @apply absolute left-0 top-[-20px] bg-secondaryColor px-[20px] py-[8px] text-white;
   }
   .cardBadgeBottom {
-    @apply bg-primaryColor absolute bottom-[-15px] left-0 px-[8px] py-[5px] text-white;
+    @apply absolute bottom-[-15px] left-0 bg-primaryColor px-[8px] py-[5px] text-white;
   }
   .cardTitle {
-    @apply border-primaryColor text-primaryColor mx-[20px] border-b-4 pb-0 text-xl font-bold lg:text-2xl;
+    @apply mx-[20px] border-b-4 border-primaryColor pb-0 text-xl font-bold text-primaryColor lg:text-2xl;
   }
   .cardContent {
     @apply p-[20px];
@@ -70,10 +73,10 @@
     @apply mt-auto flex items-center justify-between p-[20px];
   }
   .cardAmount {
-    @apply text-primaryColor font-bold;
+    @apply font-bold text-primaryColor;
   }
   .cardCurrency {
-    @apply text-primaryColor relative text-3xl font-bold;
+    @apply relative text-3xl font-bold text-primaryColor;
   }
   .cardCurrency::before {
     @apply absolute -left-10 top-0 text-[16px] content-['TWD'];
