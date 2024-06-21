@@ -217,10 +217,6 @@ const filterArea = (event) => {
     <div class="cardSelectBox">
       <select @change="filterArea" class="cardSelect" value="全部地區" selected>
         <option v-for="item in selectData" :key="item" :value="item">{{ item }}</option>
-        <!-- <option value="全部地區">全部地區</option>
-        <option value="高雄">高雄</option>
-        <option value="台中">台中</option>
-        <option value="台北">台北</option> -->
       </select>
       <p>本次搜尋共 6 筆</p>
     </div>
