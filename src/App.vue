@@ -1,7 +1,11 @@
 <script setup>
-import TheLayout from './components/TheLayout.vue'
-import TheCard from './components/Cards/TheCard.vue'
-import { computed, ref } from 'vue'
+import TheLayout from './components/TheLayout.vue';
+import TheCard from './components/Cards/TheCard.vue';
+import { computed, ref, nextTick } from 'vue';
+import { defineRule, Form, Field, ErrorMessage, configure } from 'vee-validate'; //引入vee-validate 會用的組件，方法及配置項
+import { all } from '@vee-validate/rules'; //引入 vee-validate-rules 的所有規則api
+import { localize, setLocale } from '@vee-validate/i18n'; //轉譯中文用
+import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'; //轉譯中文用
 //原始資料
 const tickData = ref([
   {
@@ -38,25 +42,25 @@ const tickData = ref([
     tickAmount: 1765,
     tickStar: 7
   }
-])
+]);
 //篩選 原始區域
-const selectData = ref(['全部地區', '高雄', '台北', '台中'])
-const selectValue = ref('全部地區')
+const selectData = ref(['全部地區', '高雄', '台北', '台中']);
+const selectValue = ref('全部地區');
 
 //傳遞資料用這包
 const tickDataList = computed(() => {
   if (selectValue.value === '全部地區') {
-    return tickData.value
+    return tickData.value;
   } else {
-    return tickData.value.filter((dataItem) => dataItem.tickArea === selectValue.value)
+    return tickData.value.filter((dataItem) => dataItem.tickArea === selectValue.value);
   }
-})
-//取 id 先用 index 代替
-const tickDataLength = computed(() => {
-  return tickData.value.length
-})
-const userData = ref({
-  id: tickDataLength,
+});
+//取 id 先用 index 代替( 初始化的值非響應式，不能用computed，所以改回一般函數 )
+const tickDataLength = () => {
+  return tickData.value.length;
+};
+//建立初始化資料
+const initialData = {
   tickName: '', //套票名稱
   tickImg: '', //套票圖片
   tickArea: '', //區域
@@ -64,13 +68,49 @@ const userData = ref({
   tickCount: '', //套票數量
   tickStar: '', //套票星級
   tickDescript: '' //套票描述
-})
-const addTicket = () => {
-  tickData.value.push(userData.value)
-}
+};
+//將資料做響應式關聯
+const userData = ref({ id: tickDataLength(), ...initialData });
+
+const addTicket = async (errorMes, restFn) => {
+  const result = await errorMes();
+  if (result.valid) {
+    tickData.value.push(userData.value);
+    nextTick(() => {
+      restFn(); //重制表單
+      userData.value = { id: tickDataLength(), ...initialData }; //重制響應式資料
+    });
+  } else {
+    console.log(result.errors);
+  }
+};
 const filterArea = (event) => {
-  selectValue.value = event.target.value
-}
+  selectValue.value = event.target.value;
+};
+//配置語言環境
+setLocale('zh_TW');
+
+//設定 vee-validate 相關配置
+configure({
+  generateMessage: localize({ zh_TW: zhTW }), //localize 將生成的訊息做翻譯
+  validateOnInput: true //輸入就會驗證，false為離開focus狀態才驗證
+});
+
+//將驗證規則放入defineRule內 ( vee-validate是根據 defineRule內的規則來判斷一開始是沒有規則內容 )
+Object.entries(all).forEach(([name, rule]) => {
+  defineRule(name, rule);
+});
+
+//根據每個 Field標籤的 name，給予規則判斷
+const schema = {
+  tickName: 'required', //必填
+  tickImg: 'required|url', //必填 且 要為url網址格式
+  tickArea: 'required', //必填
+  tickAmount: 'required|min_value:0', //必填 且 最小數字為0
+  tickCount: 'required|min_value:0', //必填 且 最小數字為0
+  tickStar: 'required|min_value:1|max_value:10', //必填 且 最小數字為1 最大10
+  tickDescript: 'required|max:100' // 必填 最大數字長度100
+};
 </script>
 
 <template>
@@ -80,63 +120,84 @@ const filterArea = (event) => {
         <img class="customLogoImg" src="./assets/images/logo.png" />
         <img class="customMainImg" src="./assets/images/main_img.png" />
       </div>
-      <form class="customFormView">
+      <!-- 
+        此處 v-slot內容 是 vee-validat提供的，主要放置表單回饋內容，方法 
+        validate:驗證結果，會回傳一個promise物件，所以需要用 async fn去接
+        resetForm:重製表單方法
+      -->
+      <Form class="customFormView" :validation-schema="schema" v-slot="{ resetForm, validate }">
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageName">套票名稱</label>
-          <input class="customInput" id="packageName" v-model="userData.tickName" />
-          <!-- <p class="mt-4 w-full">我是警告標語</p> -->
+          <Field class="customInput" id="packageName" name="tickName" v-model="userData.tickName" />
+          <ErrorMessage class="mt-4 w-full" name="tickName" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="imgUrlName">圖片網址</label>
-          <input class="customInput" id="imgUrlName" v-model="userData.tickImg" />
-          <!-- <p class="w-full">我是警告標語</p> -->
+          <Field class="customInput" id="imgUrlName" name="tickImg" v-model="userData.tickImg" />
+          <ErrorMessage class="mt-4 w-full" name="tickImg" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="attractionAreas">景點地區</label>
-          <select class="customInput" id="attractionAreas" v-model="userData.tickArea">
+          <Field
+            as="select"
+            class="customInput"
+            id="attractionAreas"
+            name="tickArea"
+            v-model="userData.tickArea"
+          >
             <option value="" disabled selected>請選擇景點地區</option>
-            <option>高雄</option>
-            <option>台中</option>
-            <option>台北</option>
-          </select>
-          <!-- <p class="w-full">我是警告標語</p> -->
+            <option value="高雄">高雄</option>
+            <option value="台中">台中</option>
+            <option value="台北">台北</option>
+          </Field>
+          <ErrorMessage class="mt-4 w-full" name="tickArea" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageAmount">套票金額</label>
-          <input
+          <Field
             class="customInput"
             type="number"
             id="packageAmount"
+            name="tickAmount"
             v-model="userData.tickAmount"
           />
-          <!-- <p class="w-full">我是警告標語</p> -->
+          <ErrorMessage class="mt-4 w-full" name="tickAmount" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageTickets">套票組數</label>
-          <input
+          <Field
             class="customInput"
             type="number"
             id="packageTickets"
+            name="tickCount"
             v-model="userData.tickCount"
           />
-          <!-- <p class="w-full">我是警告標語</p> -->
+          <ErrorMessage class="mt-4 w-full" name="tickCount" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageStar">套票星級</label>
-          <input class="customInput" type="number" id="packageStar" v-model="userData.tickStar" />
-          <!-- <p class="w-full">我是警告標語</p> -->
+          <Field
+            class="customInput"
+            type="number"
+            id="packageStar"
+            name="tickStar"
+            v-model="userData.tickStar"
+          />
+          <ErrorMessage class="mt-4 w-full" name="tickStar" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabelText" for="packageDescription">套票描述</label>
-          <textarea
+          <Field
+            as="textarea"
             class="customText"
             id="packageDescription"
+            name="tickDescript"
             v-model="userData.tickDescript"
-          ></textarea>
-          <!-- <p class="w-full">我是警告標語</p> -->
+          />
+          <ErrorMessage class="mt-4 w-full" name="tickDescript" />
         </div>
-        <button class="formButton" @click.prevent="addTicket">新增套票</button>
-      </form>
+        <button class="formButton" @click.prevent="addTicket(validate, resetForm)">新增套票</button>
+      </Form>
     </div>
   </TheLayout>
   <TheLayout class="primaryBackground">
