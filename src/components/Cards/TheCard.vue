@@ -3,11 +3,10 @@ const props = defineProps({
   tickData: {
     type: Object,
     default: () => {
-      return {}
+      return {};
     }
   }
-})
-console.log(props.tickData)
+});
 </script>
 
 <template>
@@ -15,7 +14,7 @@ console.log(props.tickData)
     <li class="card" v-for="item in props.tickData" :key="item.id">
       <div class="cardHeader">
         <span class="cardBadgeTop">{{ item.tickArea }}</span>
-        <img :src="item.tickImg" />
+        <img class="cardImgSize" :src="item.tickImg" />
         <span class="cardBadgeBottom">{{ item.tickStar }}</span>
       </div>
       <div>
