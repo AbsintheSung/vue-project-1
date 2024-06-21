@@ -63,6 +63,9 @@
   .cardBadgeBottom {
     @apply absolute bottom-[-15px] left-0 bg-primaryColor px-[8px] py-[5px] text-white;
   }
+  .cardImgSize {
+    @apply h-[280px] w-full;
+  }
   .cardTitle {
     @apply mx-[20px] border-b-4 border-primaryColor pb-0 text-xl font-bold text-primaryColor lg:text-2xl;
   }

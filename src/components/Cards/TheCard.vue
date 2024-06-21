@@ -14,7 +14,7 @@ const props = defineProps({
     <li class="card" v-for="item in props.tickData" :key="item.id">
       <div class="cardHeader">
         <span class="cardBadgeTop">{{ item.tickArea }}</span>
-        <img :src="item.tickImg" />
+        <img class="cardImgSize" :src="item.tickImg" />
         <span class="cardBadgeBottom">{{ item.tickStar }}</span>
       </div>
       <div>
