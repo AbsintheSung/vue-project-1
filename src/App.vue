@@ -138,12 +138,12 @@ const filterArea = (event) => {
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageName">套票名稱</label>
           <Field class="customInput" id="packageName" name="tickName" v-model="userData.tickName" />
-          <ErrorMessage class="mt-4 w-full" name="tickName" />
+          <ErrorMessage class="mt-4 w-full pl-[100px] text-red-600" name="tickName" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="imgUrlName">圖片網址</label>
           <Field class="customInput" id="imgUrlName" name="tickImg" v-model="userData.tickImg" />
-          <ErrorMessage class="mt-4 w-full" name="tickImg" />
+          <ErrorMessage class="mt-4 w-full pl-[100px] text-red-600" name="tickImg" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="attractionAreas">景點地區</label>
@@ -159,7 +159,7 @@ const filterArea = (event) => {
             <option value="台中">台中</option>
             <option value="台北">台北</option>
           </Field>
-          <ErrorMessage class="mt-4 w-full" name="tickArea" />
+          <ErrorMessage class="mt-4 w-full pl-[100px] text-red-600" name="tickArea" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageAmount">套票金額</label>
@@ -170,7 +170,7 @@ const filterArea = (event) => {
             name="tickAmount"
             v-model="userData.tickAmount"
           />
-          <ErrorMessage class="mt-4 w-full" name="tickAmount" />
+          <ErrorMessage class="mt-4 w-full pl-[100px] text-red-600" name="tickAmount" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageTickets">套票組數</label>
@@ -181,7 +181,7 @@ const filterArea = (event) => {
             name="tickCount"
             v-model="userData.tickCount"
           />
-          <ErrorMessage class="mt-4 w-full" name="tickCount" />
+          <ErrorMessage class="mt-4 w-full pl-[100px] text-red-600" name="tickCount" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageStar">套票星級</label>
@@ -192,7 +192,7 @@ const filterArea = (event) => {
             name="tickStar"
             v-model="userData.tickStar"
           />
-          <ErrorMessage class="mt-4 w-full" name="tickStar" />
+          <ErrorMessage class="mt-4 w-full pl-[100px] text-red-600" name="tickStar" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabelText" for="packageDescription">套票描述</label>
@@ -203,7 +203,7 @@ const filterArea = (event) => {
             name="tickDescript"
             v-model="userData.tickDescript"
           />
-          <ErrorMessage class="mt-4 w-full" name="tickDescript" />
+          <ErrorMessage class="mt-4 w-full pl-[100px] text-red-600" name="tickDescript" />
         </div>
         <button class="formButton" @click.prevent="addTicket(validate, resetForm)">新增套票</button>
       </Form>
