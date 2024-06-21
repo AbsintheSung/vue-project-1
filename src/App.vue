@@ -108,63 +108,79 @@ const schema = {
         <img class="customLogoImg" src="./assets/images/logo.png" />
         <img class="customMainImg" src="./assets/images/main_img.png" />
       </div>
-      <form class="customFormView">
+      <Form class="customFormView" :validation-schema="schema">
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageName">套票名稱</label>
-          <input class="customInput" id="packageName" v-model="userData.tickName" />
-          <!-- <p class="mt-4 w-full">我是警告標語</p> -->
+          <Field class="customInput" id="packageName" name="tickName" v-model="userData.tickName" />
+          <ErrorMessage class="mt-4 w-full" name="tickName" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="imgUrlName">圖片網址</label>
-          <input class="customInput" id="imgUrlName" v-model="userData.tickImg" />
-          <!-- <p class="w-full">我是警告標語</p> -->
+          <Field class="customInput" id="imgUrlName" name="tickImg" v-model="userData.tickImg" />
+          <ErrorMessage class="mt-4 w-full" name="tickImg" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="attractionAreas">景點地區</label>
-          <select class="customInput" id="attractionAreas" v-model="userData.tickArea">
+          <Field
+            as="select"
+            class="customInput"
+            id="attractionAreas"
+            name="tickArea"
+            v-model="userData.tickArea"
+          >
             <option value="" disabled selected>請選擇景點地區</option>
-            <option>高雄</option>
-            <option>台中</option>
-            <option>台北</option>
-          </select>
-          <!-- <p class="w-full">我是警告標語</p> -->
+            <option value="高雄">高雄</option>
+            <option value="台中">台中</option>
+            <option value="台北">台北</option>
+          </Field>
+          <ErrorMessage class="mt-4 w-full" name="tickArea" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageAmount">套票金額</label>
-          <input
+          <Field
             class="customInput"
             type="number"
             id="packageAmount"
+            name="tickAmount"
             v-model="userData.tickAmount"
           />
-          <!-- <p class="w-full">我是警告標語</p> -->
+          <ErrorMessage class="mt-4 w-full" name="tickAmount" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageTickets">套票組數</label>
-          <input
+          <Field
             class="customInput"
             type="number"
             id="packageTickets"
+            name="tickCount"
             v-model="userData.tickCount"
           />
-          <!-- <p class="w-full">我是警告標語</p> -->
+          <ErrorMessage class="mt-4 w-full" name="tickCount" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabel" for="packageStar">套票星級</label>
-          <input class="customInput" type="number" id="packageStar" v-model="userData.tickStar" />
-          <!-- <p class="w-full">我是警告標語</p> -->
+          <Field
+            class="customInput"
+            type="number"
+            id="packageStar"
+            name="tickStar"
+            v-model="userData.tickStar"
+          />
+          <ErrorMessage class="mt-4 w-full" name="tickStar" />
         </div>
         <div class="flex flex-wrap">
           <label class="customLabelText" for="packageDescription">套票描述</label>
-          <textarea
+          <Field
+            as="textarea"
             class="customText"
             id="packageDescription"
+            name="tickDescript"
             v-model="userData.tickDescript"
-          ></textarea>
-          <!-- <p class="w-full">我是警告標語</p> -->
+          />
+          <ErrorMessage class="mt-4 w-full" name="tickDescript" />
         </div>
         <button class="formButton" @click.prevent="addTicket">新增套票</button>
-      </form>
+      </Form>
     </div>
   </TheLayout>
   <TheLayout class="primaryBackground">
