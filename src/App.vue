@@ -75,6 +75,30 @@ const addTicket = () => {
 const filterArea = (event) => {
   selectValue.value = event.target.value;
 };
+//配置語言環境
+setLocale('zh_TW');
+
+//設定 vee-validate 相關配置
+configure({
+  generateMessage: localize({ zh_TW: zhTW }), //localize 將生成的訊息做翻譯
+  validateOnInput: true //輸入就會驗證，false為離開focus狀態才驗證
+});
+
+//將驗證規則放入defineRule內 ( vee-validate是根據 defineRule內的規則來判斷一開始是沒有規則內容 )
+Object.entries(all).forEach(([name, rule]) => {
+  defineRule(name, rule);
+});
+
+//根據每個 Field標籤的 name，給予規則判斷
+const schema = {
+  tickName: 'required', //必填
+  tickImg: 'required|url', //必填 且 要為url網址格式
+  tickArea: 'required', //必填
+  tickAmount: 'required|min_value:0', //必填 且 最小數字為0
+  tickCount: 'required|min_value:0', //必填 且 最小數字為0
+  tickStar: 'required|min_value:1|max_value:10', //必填 且 最小數字為1 最大10
+  tickDescript: 'required|max:100' // 必填 最大數字長度100
+};
 </script>
 
 <template>
