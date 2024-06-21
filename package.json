@@ -11,6 +11,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vee-validate/i18n": "^4.13.1",
+    "@vee-validate/rules": "^4.13.1",
+    "vee-validate": "^4.13.1",
     "vue": "^3.4.21"
   },
   "devDependencies": {

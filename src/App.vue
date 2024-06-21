@@ -1,7 +1,11 @@
 <script setup>
-import TheLayout from './components/TheLayout.vue'
-import TheCard from './components/Cards/TheCard.vue'
-import { computed, ref } from 'vue'
+import TheLayout from './components/TheLayout.vue';
+import TheCard from './components/Cards/TheCard.vue';
+import { computed, ref } from 'vue';
+import { defineRule, Form, Field, ErrorMessage, configure } from 'vee-validate'; //引入vee-validate 會用的組件，方法及配置項
+import { all } from '@vee-validate/rules'; //引入 vee-validate-rules 的所有規則api
+import { localize, setLocale } from '@vee-validate/i18n'; //轉譯中文用
+import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'; //轉譯中文用
 //原始資料
 const tickData = ref([
   {
@@ -38,23 +42,23 @@ const tickData = ref([
     tickAmount: 1765,
     tickStar: 7
   }
-])
+]);
 //篩選 原始區域
-const selectData = ref(['全部地區', '高雄', '台北', '台中'])
-const selectValue = ref('全部地區')
+const selectData = ref(['全部地區', '高雄', '台北', '台中']);
+const selectValue = ref('全部地區');
 
 //傳遞資料用這包
 const tickDataList = computed(() => {
   if (selectValue.value === '全部地區') {
-    return tickData.value
+    return tickData.value;
   } else {
-    return tickData.value.filter((dataItem) => dataItem.tickArea === selectValue.value)
+    return tickData.value.filter((dataItem) => dataItem.tickArea === selectValue.value);
   }
-})
+});
 //取 id 先用 index 代替
 const tickDataLength = computed(() => {
-  return tickData.value.length
-})
+  return tickData.value.length;
+});
 const userData = ref({
   id: tickDataLength,
   tickName: '', //套票名稱
@@ -64,13 +68,13 @@ const userData = ref({
   tickCount: '', //套票數量
   tickStar: '', //套票星級
   tickDescript: '' //套票描述
-})
+});
 const addTicket = () => {
-  tickData.value.push(userData.value)
-}
+  tickData.value.push(userData.value);
+};
 const filterArea = (event) => {
-  selectValue.value = event.target.value
-}
+  selectValue.value = event.target.value;
+};
 </script>
 
 <template>
